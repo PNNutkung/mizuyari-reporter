@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
+import LoginInputs from './LoginInputs'
 
 class LoginPage extends Component {
   render() {
     return (
-      <h1>Hello World!</h1>
+      <div classID='login-page'>
+        <LoginInputs />
+      </div>
     )
   }
 }
