@@ -1,24 +1,34 @@
 import React, { Component } from 'react'
-import { Input } from 'react-toolbox/lib/input'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton';
+import './logininputs.css'
 
-class LoginInputs extends Component {
-  state = {
-    username: '',
-    password: ''
+export default class LoginInputs extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: ''
+    }
   }
 
-  handleChange = (name, value) => {
-    this.setState({...this.state, [name]: value})
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    })
+  }
+
+  loginHandle = (event) => {
+    console.log(this.state)
   }
 
   render() {
     return (
-      <section>
-        <Input type='text' label='Username' name="username" value={this.state.username} onChange={this.handleChange.bind(this, 'username')} maxLength={32} />
-        <Input type='password' label='Password' name="password" value={this.state.password} onChange={this.handleChange.bind(this, 'password')} maxLength={32} />
-      </section>
+      <div id='login-inputs-section'>
+          <TextField floatingLabelText='Username' name='username' type='text' value={this.state.username} onChange={this.handleChange} fullWidth={true} />
+          <TextField floatingLabelText='Password' name='password' type='password' value={this.state.password} onChange={this.handleChange} fullWidth={true} />
+          <RaisedButton label="Login" fullWidth={true} onClick={this.loginHandle}/>
+      </div>
     )
   }
 }
-
-export default LoginInputs

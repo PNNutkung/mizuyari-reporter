@@ -4,7 +4,7 @@ import LoginInputs from './LoginInputs'
 class LoginPage extends Component {
   render() {
     return (
-      <div classID='login-page'>
+      <div id='login-page'>
         <LoginInputs />
       </div>
     )

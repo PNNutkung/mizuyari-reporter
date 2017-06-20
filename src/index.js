@@ -1,8 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom'
 import Routes from './Routes'
-import registerServiceWorker from './registerServiceWorker';
+import injectTapEventPlugin from 'react-tap-event-plugin'
+import registerServiceWorker from './registerServiceWorker'
 import './index.css';
 
+injectTapEventPlugin()
 ReactDOM.render(<Routes />,document.getElementById('root'))
 registerServiceWorker()

@@ -1,0 +1,4 @@
+#login-inputs-section {
+  display: flex;
+  flex-direction: column;
+}
