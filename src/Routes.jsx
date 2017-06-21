@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import createBrowserHistory from 'history/createBrowserHistory'
 import MenuPage from './components/menu/MenuPage'
 import LoginPage from './components/login/LoginPage'
+import RegisterPage from './components/register/RegisterPage'
 
 export default class Routes extends Component {
   render() {
@@ -14,6 +15,7 @@ export default class Routes extends Component {
           <div classID='application'>
             <Route exact path='/' component={MenuPage} />
             <Route path='/login' component={LoginPage} />
+            <Route path='/signup' component={RegisterPage} />
           </div>
         </Router>
       </MuiThemeProvider>
