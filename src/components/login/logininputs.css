@@ -3,8 +3,14 @@
   flex-direction: column;
 }
 
-.login-input-btn {
-  margin-top: 16px;
+.login-inputs-btn {
+  margin-bottom: 16px;
+}
+
+.login-inputs-card-action {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 #account-icon {

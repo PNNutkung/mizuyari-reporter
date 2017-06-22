@@ -1,5 +1,6 @@
 import firebase from 'firebase'
-var config = {
+
+const config = {
   apiKey: "AIzaSyAugP_V1ezj9DFC0dDqUphN2JJAznGrnow",
   authDomain: "mizuyari-91fa6.firebaseapp.com",
   databaseURL: "https://mizuyari-91fa6.firebaseio.com",
@@ -7,5 +8,9 @@ var config = {
   storageBucket: "mizuyari-91fa6.appspot.com",
   messagingSenderId: "691507603862"
 }
-var Firebase = firebase.initializeApp(config)
-export default Firebase
+
+firebase.initializeApp(config)
+
+export const db = firebase.database()
+export const ref = firebase.database().ref()
+export const firebaseAuth = firebase.auth
