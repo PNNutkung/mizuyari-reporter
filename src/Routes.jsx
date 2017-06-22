@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Redirect, Switch, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import { firebaseAuth } from './config/firebase'
-import { logout } from './helpers/auth'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import DescriptionPage from './components/description/DescriptionPage'
 import MenuPage from './components/menu/MenuPage'
 import LoginPage from './components/login/LoginPage'
 import RegisterPage from './components/register/RegisterPage'
 
-function PrivateRoute ({component: Component, authed, ...rest}) {
+const PrivateRoute = ({component: Component, authed, ...rest}) => {
   return (
     <Route
       {...rest}
@@ -19,13 +18,13 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
   )
 }
 
-function PublicRoute ({component: Component, authed, ...rest}) {
+const PublicRoute = ({component: Component, authed, ...rest}) => {
   return (
     <Route
       {...rest}
       render={props => (authed === false
         ? (<Component authed={authed} {...props} />)
-        : (<Redirect to='/main' />)
+        : (<Redirect to='/menu' />)
     )} />
   )
 }
@@ -60,30 +59,16 @@ export default class Routes extends Component {
   }
 
   render() {
+
     return this.state.loading === true ? <h1>Loading</h1> : (
       <Router>
         <MuiThemeProvider>
           <div classID='application'>
-            <div>
-              <li>
-          {this.state.authed
-                    ? <button
-                        style={{border: 'none', background: 'transparent'}}
-                        onClick={() => {
-                          logout()
-                        }}
-                        className="navbar-brand">Logout</button>
-                    : <span>
-                        <Link to="/login" className="navbar-brand">Login</Link><br/>
-                        <Link to="/signup" className="navbar-brand">signup</Link>
-                      </span>}
-        </li>
-            </div>
             <Switch>
-              <Route path='/' exact component={DescriptionPage} />
+              <Route path='/' exact render={props => <DescriptionPage authed={this.state.authed} {...props} />} />
               <PublicRoute authed={this.state.authed} path='/login' component={LoginPage} />
               <PublicRoute authed={this.state.authed} path='/signup' component={RegisterPage} />
-              <PrivateRoute authed={this.state.authed} path='/main' component={MenuPage} />
+              <PrivateRoute authed={this.state.authed} path='/menu' component={MenuPage} />
               <Route render={() => <h3>No Match</h3>} />
             </Switch>
           </div>

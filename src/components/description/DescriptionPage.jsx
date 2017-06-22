@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-
+import HeaderAppBar from '../appbar/HeaderAppBar'
 
 export default class DescriptionPage extends Component {
   render() {
+    console.log(this.props)
     return (
       <div>
+        <HeaderAppBar {...this.props}/>
         DescriptionPage
-        <Link to='/login'>login</Link>
         <br/>
       </div>
     )
