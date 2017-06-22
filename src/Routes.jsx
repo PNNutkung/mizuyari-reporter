@@ -86,12 +86,9 @@ export default class Routes extends Component {
                 onTitleTouchTap={this.handleTitleTouchTap}
                 showMenuIconButton={false}
                 iconElementRight={
-                  this.props.authed
+                  this.state.authed
                   ? (<FlatButton onClick={ () => { logout() } } label='Log Out' />)
-                  : (<div>
-                      <FlatButton label='Log in' href='/login' />
-                      <FlatButton label='Sign up' href='/signup' />
-                    </div>)
+                  : (<FlatButton label='Log in' href='/login' />)
                 }
               />
             </div>
