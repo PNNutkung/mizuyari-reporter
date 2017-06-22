@@ -6,6 +6,19 @@ import DescriptionPage from './components/description/DescriptionPage'
 import MenuPage from './components/menu/MenuPage'
 import LoginPage from './components/login/LoginPage'
 import RegisterPage from './components/register/RegisterPage'
+import AppBar from 'material-ui/AppBar'
+import FlatButton from 'material-ui/FlatButton'
+import createBrowserHistory from 'history/createBrowserHistory'
+import { logout } from './helpers/auth'
+import './Routes.css'
+
+const mizuHistory = createBrowserHistory()
+
+const styles = {
+  title: {
+    cursor: 'pointer'
+  }
+}
 
 const PrivateRoute = ({component: Component, authed, ...rest}) => {
   return (
@@ -58,19 +71,39 @@ export default class Routes extends Component {
     this.removeListener()
   }
 
-  render() {
+  handleTitleTouchTap = () => {
+    window.location = '/'
+  }
 
+  render() {
     return this.state.loading === true ? <h1>Loading</h1> : (
-      <Router>
+      <Router history={mizuHistory}>
         <MuiThemeProvider>
           <div classID='application'>
-            <Switch>
-              <Route path='/' exact render={props => <DescriptionPage authed={this.state.authed} {...props} />} />
-              <PublicRoute authed={this.state.authed} path='/login' component={LoginPage} />
-              <PublicRoute authed={this.state.authed} path='/signup' component={RegisterPage} />
-              <PrivateRoute authed={this.state.authed} path='/menu' component={MenuPage} />
-              <Route render={() => <h3>No Match</h3>} />
-            </Switch>
+            <div>
+              <AppBar
+                title={<span style={styles.title}>水やりリポーター</span>}
+                onTitleTouchTap={this.handleTitleTouchTap}
+                showMenuIconButton={false}
+                iconElementRight={
+                  this.props.authed
+                  ? (<FlatButton onClick={ () => { logout() } } label='Log Out' />)
+                  : (<div>
+                      <FlatButton label='Log in' href='/login' />
+                      <FlatButton label='Sign up' href='/signup' />
+                    </div>)
+                }
+              />
+            </div>
+            <div id='application-content'>
+              <Switch>
+                <Route path='/' exact render={props => <DescriptionPage authed={this.state.authed} {...props} />} />
+                <PublicRoute authed={this.state.authed} path='/login' component={LoginPage} />
+                <PublicRoute authed={this.state.authed} path='/signup' component={RegisterPage} />
+                <PrivateRoute authed={this.state.authed} path='/menu' component={MenuPage} />
+                <Route render={() => <h3>No Match</h3>} />
+              </Switch>
+            </div>
           </div>
         </MuiThemeProvider>
       </Router>
