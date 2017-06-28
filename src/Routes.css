@@ -1,3 +1,13 @@
+#application {
+  display: flex;
+  flex-direction: column;
+}
+
+#application-appbar {
+  margin-bottom: 60px;
+}
+
 #application-content {
   padding: 20px;
 }
+

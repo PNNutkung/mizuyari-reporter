@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import RaisedButton from 'material-ui/RaisedButton'
 
 export default class AnotherMethod extends Component {
   render() {
     return (
-      <div>
-        <RaisedButton label="Sign up" className='login-inputs-btn' fullWidth={true} href='/signup' />
+      <div className='mdl-cell mdl-cell--12-col-desktop mdl-cell mdl-cell--12-col-tablet mdl-cell mdl-cell--12-col-phone'>
+        <a className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-cell mdl-cell--12-col-desktop mdl-cell mdl-cell--12-col-tablet mdl-cell mdl-cell--12-col-phone' href='/signup'>Sign up</a>
       </div>
     )
   }

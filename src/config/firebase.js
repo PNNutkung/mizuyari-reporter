@@ -12,5 +12,7 @@ const config = {
 firebase.initializeApp(config)
 
 export const db = firebase.database()
-export const ref = firebase.database().ref()
+export const dbRef = db.ref()
+export const storage = firebase.app().storage('gs://mizuyari-91fa6.appspot.com')
+export const storageRef = storage.ref()
 export const firebaseAuth = firebase.auth
