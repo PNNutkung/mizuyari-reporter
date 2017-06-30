@@ -25,18 +25,15 @@ class MenuPage extends Component {
 
   render() {
     let menuCardCheckinStyle = {
-      backgroundSize: 'cover',
-      backgroundPosition: 'center center',
-      backgroundRepeat: 'no-repeat',
-      backgroundImage: `url(${this.state.checkinCardImage})`,
-      height: '240px'
+      background: `url(${this.state.checkinCardImage}) center / cover`,
+      height: '200px',
+      color: '#fff'
     }
     return (
       <div className='mdl-cell mdl-cell--8-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
         <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.checkinHandler}>
-          <div id='check-in-card' className='mdl-card__title mdl-card--expand' style={menuCardCheckinStyle}></div>
-          <div className='mdl-card__actions'>
-            <span className='demo-card-image__filename'>Check-in</span>
+          <div className="mdl-card__title" style={menuCardCheckinStyle}>
+            <h2 className="mdl-card__title-text">Check-in</h2>
           </div>
         </div>
       </div>
