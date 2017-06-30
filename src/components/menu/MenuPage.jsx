@@ -7,10 +7,12 @@ class MenuPage extends Component {
     super(props)
     this.state = {
       checkinCardImage: '',
-      weatherForecastCardImage: ''
+      weatherForecastCardImage: '',
+      wateringLogsCardImage: ''
     }
     this.getImage('checkinCardImage')
     this.getImage('weatherForecastCardImage')
+    this.getImage('wateringLogsCardImage')
   }
 
   checkinHandler = () => {
@@ -19,6 +21,10 @@ class MenuPage extends Component {
 
   forecastHandler = () => {
     console.log('Weather forecast click')
+  }
+
+  logHandler = () => {
+    console.log('Log handler click')
   }
 
   getImage = (image) => {
@@ -40,6 +46,11 @@ class MenuPage extends Component {
       height: '200px',
       color: '#fff'
     }
+    let wateringLogsCardImageStyle = {
+      background: `url(${this.state.wateringLogsCardImage}) center / cover`,
+      height: '200px',
+      color: '#fff'
+    }
     return (
       <div className='mdl-cell mdl-cell--8-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
         <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.forecastHandler}>
@@ -50,6 +61,11 @@ class MenuPage extends Component {
         <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.checkinHandler}>
           <div className="mdl-card__title" style={menuCardCheckinStyle}>
             <h2 className="mdl-card__title-text">Check-in</h2>
+          </div>
+        </div>
+        <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.logHandler}>
+          <div className="mdl-card__title" style={wateringLogsCardImageStyle}>
+            <h2 className="mdl-card__title-text">Watering Logs</h2>
           </div>
         </div>
       </div>
