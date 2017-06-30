@@ -94,13 +94,15 @@ export default class Routes extends Component {
           </div>
           <main className='mdl-layout__content'>
             <div className='page-content mdl-grid'>
-              <Switch className='mdl-cell mdl-cell--12-col-desktop mdl-cell mdl-cell--12-col-tablet mdl-cell mdl-cell--12-col-phone'>
-                <Route path='/' exact render={props => <DescriptionPage authed={this.state.authed} {...props} />} />
-                <PublicRoute authed={this.state.authed} path='/login' component={LoginPage} />
-                <PublicRoute authed={this.state.authed} path='/signup' component={RegisterPage} />
-                <PrivateRoute authed={this.state.authed} path='/menu' component={MenuPage} />
-                <Route render={() => <h3>No Match</h3>} />
-              </Switch>
+              <div className="mdl-layout-spacer"></div>
+                <Switch className='mdl-cell mdl-cell--12-col-desktop mdl-cell mdl-cell--12-col-tablet mdl-cell mdl-cell--12-col-phone'>
+                  <Route path='/' exact render={props => <DescriptionPage authed={this.state.authed} {...props} />} />
+                  <PublicRoute authed={this.state.authed} path='/login' component={LoginPage} />
+                  <PublicRoute authed={this.state.authed} path='/signup' component={RegisterPage} />
+                  <PrivateRoute authed={this.state.authed} path='/menu' component={MenuPage} />
+                  <Route render={() => <h3>No Match</h3>} />
+                </Switch>
+              <div className="mdl-layout-spacer"></div>
             </div>
           </main>
         </div>
