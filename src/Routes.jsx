@@ -6,6 +6,7 @@ import MenuPage from './components/menu/MenuPage'
 import LoginPage from './components/login/LoginPage'
 import RegisterPage from './components/register/RegisterPage'
 import createBrowserHistory from 'history/createBrowserHistory'
+import CheckInPage from './components/checkin/CheckInPage'
 import { logout } from './helpers/auth'
 
 const mizuHistory = createBrowserHistory()
@@ -76,7 +77,12 @@ export default class Routes extends Component {
               <nav className='mdl-navigation mdl-layout--large-screen-only'>
                 {
                   this.state.authed
-                  ? (<a className='mdl-navigation__link' onClick={ () => { logout() } }>Log Out</a>)
+                  ? ([<a className='mdl-navigation__link' href='/menu'>Menu</a>,
+                    <a className='mdl-navigation__link' href='/checkin'>Check in</a>,
+                    <a className='mdl-navigation__link' href='/weather'>Weather Forecast</a>,
+                    <a className='mdl-navigation__link' href='/logs'>Watering Logs</a>,
+                    <a className='mdl-navigation__link' onClick={ () => { logout() } }>Log Out</a>
+                  ])
                   : (<a className='mdl-navigation__link' href='/login'>Log in</a>)
                 }
               </nav>
@@ -87,7 +93,12 @@ export default class Routes extends Component {
             <nav className="mdl-navigation">
               {
                 this.state.authed
-                ? (<a className='mdl-navigation__link' onClick={ () => { logout() } }>Log Out</a>)
+                ? ([<a className='mdl-navigation__link' href='/menu'>Menu</a>,
+                    <a className='mdl-navigation__link' href='/checkin'>Check in</a>,
+                    <a className='mdl-navigation__link' href='/weather'>Weather Forecast</a>,
+                    <a className='mdl-navigation__link' href='/logs'>Watering Logs</a>,
+                    <a className='mdl-navigation__link' onClick={ () => { logout() } }>Log Out</a>
+                ])
                 : (<a className='mdl-navigation__link' href='/login'>Log in</a>)
               }
             </nav>
@@ -100,6 +111,7 @@ export default class Routes extends Component {
                   <PublicRoute authed={this.state.authed} path='/login' component={LoginPage} />
                   <PublicRoute authed={this.state.authed} path='/signup' component={RegisterPage} />
                   <PrivateRoute authed={this.state.authed} path='/menu' component={MenuPage} />
+                  <PrivateRoute authed={this.state.authed} path='/checkin' component={CheckInPage} />
                   <Route render={() => <h3>No Match</h3>} />
                 </Switch>
               <div className="mdl-layout-spacer"></div>

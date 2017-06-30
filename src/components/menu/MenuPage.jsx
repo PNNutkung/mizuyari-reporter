@@ -16,15 +16,15 @@ class MenuPage extends Component {
   }
 
   checkinHandler = () => {
-    console.log('Check in click')
+    window.location = '/checkin'
   }
 
   forecastHandler = () => {
-    console.log('Weather forecast click')
+    window.location = '/weather'
   }
 
   logHandler = () => {
-    console.log('Log handler click')
+    window.location = '/logs'
   }
 
   getImage = (image) => {
