@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { login, resetPassword } from '../../helpers/auth'
 import AnotherMethod from './AnotherMethod'
-import { FormGroup, Button } from 'react-bootstrap'
-import FieldGroup from './FieldGroup'
+import { FormGroup, Button, Panel } from 'react-bootstrap'
+import FieldGroup from '../FieldGroup'
 
 function setErrorMsg (err) {
   return {
@@ -25,6 +25,7 @@ export default class LoginInputs extends Component {
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
+      loginMessage: null
     })
   }
 
@@ -36,8 +37,8 @@ export default class LoginInputs extends Component {
     login(this.state.username, this.state.password)
       .then(() => this.setState({isLoggingIn: false}))
       .catch((err) => {
+        this.setState(setErrorMsg('Wrong username or password.'))
         this.setState({isLoggingIn: false})
-        
       })
   }
 
@@ -51,6 +52,13 @@ export default class LoginInputs extends Component {
   render() {
     return (
       <div id='login-inputs-section'>
+        {
+          this.state.loginMessage
+          ? (<Panel header='Please check' bsStyle='danger'>
+              {this.state.loginMessage}
+            </Panel>)
+          : null
+        }
         <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
           <div className='mdl-card__title mdl-card--expand'>
             <h2 className='mdl-card__title-text'>Log in to Mizuyari</h2>
@@ -76,13 +84,14 @@ export default class LoginInputs extends Component {
                 onChange={this.handleChange}
               />
               <Button 
-                bsStyle="primary"
+                bsStyle='primary'
+                type='submit'
                 disable={this.state.isLoggingIn}
+                onClick={this.loginHandle}
               >
                 {this.state.isLoggingIn ? 'Loging in...': 'Log in'}
               </Button>
               <Button
-                type='submit'
                 disable={this.state.isResettingPassword}
                 onClick={this.forgotPassword}
               >
