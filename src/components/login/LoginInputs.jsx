@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { login, resetPassword } from '../../helpers/auth'
 import AnotherMethod from './AnotherMethod'
+import { FormGroup, Button } from 'react-bootstrap'
+import FieldGroup from './FieldGroup'
 
 function setErrorMsg (err) {
   return {
@@ -14,7 +16,9 @@ export default class LoginInputs extends Component {
     this.state = {
       username: '',
       password: '',
-      loginMessage: null
+      loginMessage: null,
+      isLoggingIn: false,
+      isResettingPassword: false
     }
   }
 
@@ -26,17 +30,21 @@ export default class LoginInputs extends Component {
 
   loginHandle = (event) => {
     event.preventDefault()
+    this.setState({
+      isLoggingIn: true
+    })
     login(this.state.username, this.state.password)
+      .then(() => this.setState({isLoggingIn: false}))
       .catch((err) => {
-        let snackbarContainer = document.querySelector('#login-toast')
-        this.setState(setErrorMsg('Wrong username or password.'))
-        snackbarContainer.MaterialSnackbar.showSnackbar({message: this.state.loginMessage})
+        this.setState({isLoggingIn: false})
+        
       })
   }
 
   forgotPassword = () => {
+    this.setState({isResettingPassword: true})
     resetPassword(this.state.username)
-      .then(() => this.setState(setErrorMsg(`Password reset email sent to ${this.state.username}`)))
+      .then(() => this.setState(setErrorMsg(`Password reset email sent to ${this.state.username}`,{isResettingPassword: false})))
       .catch((err) => this.setState(setErrorMsg(`Email address not found.`)))
   }
 
@@ -48,28 +56,39 @@ export default class LoginInputs extends Component {
             <h2 className='mdl-card__title-text'>Log in to Mizuyari</h2>
           </div>
           <form onSubmit={this.loginHandle}>
-            <div className='mdl-card__supporting-text mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
-              <div className='mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
-                <input className='mdl-textfield__input' id='login-inputs-username' name='username' type='text' value={this.state.username} onChange={this.handleChange} />
-                <label className='mdl-textfield__label' htmlFor='login-inputs-username'>Email</label>
-              </div>
-              <div className='mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
-                <input className='mdl-textfield__input' id='login-inputs-password' name='password' type='password' value={this.state.password} onChange={this.handleChange} />
-                <label className='mdl-textfield__label' htmlFor='login-inputs-password'>Password</label>
-              </div>
-              <div id='login-toast' className='mdl-js-snackbar mdl-snackbar mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
-              <div className='mdl-snackbar__text mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'></div>
-                <button className='mdl-snackbar__action' type='button'></button>
-              </div>
-            </div>
-            <div className='mdl-card__actions mdl-card--border'>
-              <button className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored  mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' type='submit'>
-                Log in
-              </button>
-              <button className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.forgotPassword}>
-                Reset password?
-              </button>
-            </div>
+            <FormGroup controlId='loginForm'>
+              <FieldGroup
+                id='username'
+                name='username'
+                type='text'
+                label='Email'
+                placeholder='Please enter your email'
+                value={this.state.username}
+                onChange={this.handleChange}
+              />
+              <FieldGroup
+                id='password'
+                name='password'
+                type='password'
+                label='Password'
+                placeholder='Please enter your password'
+                value={this.state.password}
+                onChange={this.handleChange}
+              />
+              <Button 
+                bsStyle="primary"
+                disable={this.state.isLoggingIn}
+              >
+                {this.state.isLoggingIn ? 'Loging in...': 'Log in'}
+              </Button>
+              <Button
+                type='submit'
+                disable={this.state.isResettingPassword}
+                onClick={this.forgotPassword}
+              >
+                {this.state.isResettingPassword? 'Resetting password': 'Reset password'}
+              </Button>
+            </FormGroup>
           </form>
         </div>
         <h3>Or</h3>

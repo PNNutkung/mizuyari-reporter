@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect, Switch, Link } from 'react-router-dom'
 import { firebaseAuth } from './config/firebase'
 import DescriptionPage from './components/description/DescriptionPage'
 import MenuPage from './components/menu/MenuPage'
@@ -8,6 +8,7 @@ import RegisterPage from './components/register/RegisterPage'
 import createBrowserHistory from 'history/createBrowserHistory'
 import CheckInPage from './components/checkin/CheckInPage'
 import { logout } from './helpers/auth'
+import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap'
 
 const mizuHistory = createBrowserHistory()
 
@@ -69,54 +70,40 @@ export default class Routes extends Component {
   render() {
     return this.state.loading === true ? <h1>Loading</h1> : (
       <Router history={mizuHistory}>
-        <div className='mdl-layout mdl-js-layout mdl-layout--fixed-header'>
-          <header className='mdl-layout__header'>
-            <div className='mdl-layout__header-row'>
-              <span className='mdl-layout-title' onClick={this.handleTitleTouchTap}>水やりリポーター</span>
-              <div className='mdl-layout-spacer'></div>
-              <nav className='mdl-navigation mdl-layout--large-screen-only'>
+        <div>
+          <Navbar collapseOnSelect>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <Link to='/menu'>水やりリポーター</Link>
+              </Navbar.Brand>
+                <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav pullRight>
                 {
                   this.state.authed
-                  ? ([<a className='mdl-navigation__link' href='/menu'>Menu</a>,
-                    <a className='mdl-navigation__link' href='/checkin'>Check in</a>,
-                    <a className='mdl-navigation__link' href='/weather'>Weather Forecast</a>,
-                    <a className='mdl-navigation__link' href='/logs'>Watering Logs</a>,
-                    <a className='mdl-navigation__link' onClick={ () => { logout() } }>Log Out</a>
+                  ? ([
+                      <NavItem eventKey={0}><Link to='/menu'>Menu</Link></NavItem>,
+                      <NavItem eventKey={1}><Link to='/checkin'>Check in</Link></NavItem>,
+                      <NavItem eventKey={2}><Link to='/weather'>Weather Forecast</Link></NavItem>,
+                      <NavItem eventKey={3}><Link to='/logs'>Watering Logs</Link></NavItem>,
+                      <NavItem eventKey={4}><Link to='/' onClick={ () => { logout() } }>Log Out</Link></NavItem>
                   ])
-                  : (<a className='mdl-navigation__link' href='/login'>Log in</a>)
+                  : (<NavItem eventKey={5}><Link to='/login'>Log in</Link></NavItem>)
                 }
-              </nav>
-            </div>
-          </header>
-          <div className="mdl-layout__drawer">
-            <span className="mdl-layout-title">水やりリポーター</span>
-            <nav className="mdl-navigation">
-              {
-                this.state.authed
-                ? ([<a className='mdl-navigation__link' href='/menu'>Menu</a>,
-                    <a className='mdl-navigation__link' href='/checkin'>Check in</a>,
-                    <a className='mdl-navigation__link' href='/weather'>Weather Forecast</a>,
-                    <a className='mdl-navigation__link' href='/logs'>Watering Logs</a>,
-                    <a className='mdl-navigation__link' onClick={ () => { logout() } }>Log Out</a>
-                ])
-                : (<a className='mdl-navigation__link' href='/login'>Log in</a>)
-              }
-            </nav>
-          </div>
-          <main className='mdl-layout__content'>
-            <div className='page-content mdl-grid'>
-              <div className="mdl-layout-spacer"></div>
-                <Switch className='mdl-cell mdl-cell--12-col-desktop mdl-cell mdl-cell--12-col-tablet mdl-cell mdl-cell--12-col-phone'>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+          <Grid>
+              <Switch>
                   <Route path='/' exact render={props => <DescriptionPage authed={this.state.authed} {...props} />} />
                   <PublicRoute authed={this.state.authed} path='/login' component={LoginPage} />
                   <PublicRoute authed={this.state.authed} path='/signup' component={RegisterPage} />
                   <PrivateRoute authed={this.state.authed} path='/menu' component={MenuPage} />
                   <PrivateRoute authed={this.state.authed} path='/checkin' component={CheckInPage} />
                   <Route render={() => <h3>No Match</h3>} />
-                </Switch>
-              <div className="mdl-layout-spacer"></div>
-            </div>
-          </main>
+              </Switch>
+          </Grid>
         </div>
       </Router>
     )

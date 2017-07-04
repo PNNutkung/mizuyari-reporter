@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { storageRef } from '../../config/firebase'
 
 
@@ -13,18 +14,6 @@ class MenuPage extends Component {
     this.getImage('checkinCardImage')
     this.getImage('weatherForecastCardImage')
     this.getImage('wateringLogsCardImage')
-  }
-
-  checkinHandler = () => {
-    window.location = '/checkin'
-  }
-
-  forecastHandler = () => {
-    window.location = '/weather'
-  }
-
-  logHandler = () => {
-    window.location = '/logs'
   }
 
   getImage = (image) => {
@@ -53,21 +42,27 @@ class MenuPage extends Component {
     }
     return (
       <div className='mdl-cell mdl-cell--8-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
-        <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.forecastHandler}>
-          <div className="mdl-card__title" style={weatherForecastCardCheckinStyle}>
-            <h2 className="mdl-card__title-text">Weather Forecast</h2>
+        <Link to='/weather'>
+          <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.forecastHandler}>
+            <div className="mdl-card__title" style={weatherForecastCardCheckinStyle}>
+              <h2 className="mdl-card__title-text">Weather Forecast</h2>
+            </div>
           </div>
-        </div>
-        <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.checkinHandler}>
-          <div className="mdl-card__title" style={menuCardCheckinStyle}>
-            <h2 className="mdl-card__title-text">Check-in</h2>
+        </Link>
+        <Link to='/checkin'>
+          <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.checkinHandler}>
+            <div className="mdl-card__title" style={menuCardCheckinStyle}>
+              <h2 className="mdl-card__title-text">Check-in</h2>
+            </div>
           </div>
-        </div>
-        <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.logHandler}>
-          <div className="mdl-card__title" style={wateringLogsCardImageStyle}>
-            <h2 className="mdl-card__title-text">Watering Logs</h2>
+        </Link>
+        <Link to='/logs'>
+          <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.logHandler}>
+            <div className="mdl-card__title" style={wateringLogsCardImageStyle}>
+              <h2 className="mdl-card__title-text">Watering Logs</h2>
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
     )
   }
