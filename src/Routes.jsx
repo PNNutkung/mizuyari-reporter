@@ -85,13 +85,15 @@ export default class Routes extends Component {
                 {
                   this.state.authed
                   ? ([
-                      <LinkContainer to='/menu' key={0}><NavItem eventKey={0}>Menu</NavItem></LinkContainer>,
                       <LinkContainer to='/checkin' key={1}><NavItem eventKey={1}>Check in</NavItem></LinkContainer>,
                       <LinkContainer to='/weather' key={2}><NavItem eventKey={2}>Weather Forecast</NavItem></LinkContainer>,
                       <LinkContainer to='/logs' key={3}><NavItem eventKey={3}>Watering Logs</NavItem></LinkContainer>,
                       <NavItem eventKey={4} key={4} onClick={this.logoutHandler}>Log Out</NavItem>
-                  ])
-                  : (<LinkContainer to='/login'><NavItem eventKey={5} key={5}>Log in</NavItem></LinkContainer>)
+                    ])
+                  : ([
+                      <LinkContainer to='/login' key={5}><NavItem eventKey={5}>Log in</NavItem></LinkContainer>,
+                      <LinkContainer to='/signup'key={6}><NavItem eventKey={6}>Sign up</NavItem></LinkContainer>
+                    ])
                 }
               </Nav>
             </Navbar.Collapse>

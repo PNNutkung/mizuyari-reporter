@@ -3,6 +3,7 @@ import { auth } from '../../helpers/auth'
 import { Redirect } from 'react-router'
 import { FormGroup, Button, Panel } from 'react-bootstrap'
 import FieldGroup from '../FieldGroup'
+import { dbRef } from '../../config/firebase'
 
 function setErrorMsg(err) {
   return {
@@ -16,6 +17,8 @@ export default class RegisterPage extends Component {
     this.state = {
       username: '',
       password: '',
+      firstname: '',
+      lastname: '',
       registerError: null,
       isRegistering: false
     }
@@ -32,8 +35,17 @@ export default class RegisterPage extends Component {
     event.preventDefault()
     this.setState({isRegistering: true})
     auth(this.state.username, this.state.password)
-    .then(() => {
+    .then((user) => {
       this.setState({isRegistering: false})
+      dbRef.child(`users/${user.uid}`)
+      .set({
+        info: {
+          uid: user.uid,
+          email: user.email,
+          firstname: this.state.firstname,
+          lastname: this.state.lastname
+        }
+      })
       return <Redirect push to='/'/>
     })
     .catch(err => {
@@ -44,7 +56,7 @@ export default class RegisterPage extends Component {
 
   render() {
     return (
-      <div id='register-page' className='mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
+      <div id='register-page'>
         {
           this.state.registerError 
           ? (<Panel header='Please check' bsStyle='danger'>
@@ -52,9 +64,9 @@ export default class RegisterPage extends Component {
           </Panel>)
           : null
         }
-        <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
-            <div className='mdl-card__title mdl-card--expand'>
-              <h2 className="mdl-card__title-text">Sign up to Mizuyari</h2>
+        <div>
+            <div>
+              <h2>Sign up to Mizuyari</h2>
             </div>
             <form onSubmit={this.onSignUpSubmit}>
               <FormGroup controlId='registerForm'>
@@ -63,7 +75,7 @@ export default class RegisterPage extends Component {
                   name='username'
                   type='text'
                   label='Email'
-                  placeholder='Please enter your email'
+                  placeholder='Please enter your email.'
                   value={this.state.username}
                   onChange={this.handleChange}
                 />
@@ -72,8 +84,26 @@ export default class RegisterPage extends Component {
                   name='password'
                   type='password'
                   label='Password'
-                  placeholder='Please enter your password'
+                  placeholder='Please enter your password.'
                   value={this.state.password}
+                  onChange={this.handleChange}
+                />
+                <FieldGroup
+                  id='firstname'
+                  name='firstname'
+                  type='text'
+                  label='Firstname'
+                  placeholder='Please enter your firstname.'
+                  value={this.state.firstname}
+                  onChange={this.handleChange}
+                />
+                <FieldGroup
+                  id='lastname'
+                  name='lastname'
+                  type='text'
+                  label='Lastname'
+                  placeholder='Please enter your lastname.'
+                  value={this.state.lastname}
                   onChange={this.handleChange}
                 />
                 <Button
