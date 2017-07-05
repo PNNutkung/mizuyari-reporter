@@ -9,6 +9,7 @@ import createBrowserHistory from 'history/createBrowserHistory'
 import CheckInPage from './components/checkin/CheckInPage'
 import { logout } from './helpers/auth'
 import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
 const mizuHistory = createBrowserHistory()
 
@@ -63,8 +64,9 @@ export default class Routes extends Component {
     this.removeListener()
   }
 
-  handleTitleTouchTap = () => {
-    window.location = '/menu'
+  logoutHandler () {
+    logout()
+    return <Redirect push to='/'/>
   }
 
   render() {
@@ -83,13 +85,13 @@ export default class Routes extends Component {
                 {
                   this.state.authed
                   ? ([
-                      <NavItem eventKey={0} href='/menu'>Menu</NavItem>,
-                      <NavItem eventKey={1} href='/checkin'>Check in</NavItem>,
-                      <NavItem eventKey={2} href='/weather'>Weather Forecast</NavItem>,
-                      <NavItem eventKey={3} href='/logs'>Watering Logs</NavItem>,
-                      <NavItem eventKey={4} href='/' onClick={ () => { logout() } }>Log Out</NavItem>
+                      <LinkContainer to='/menu' key={0}><NavItem eventKey={0}>Menu</NavItem></LinkContainer>,
+                      <LinkContainer to='/checkin' key={1}><NavItem eventKey={1}>Check in</NavItem></LinkContainer>,
+                      <LinkContainer to='/weather' key={2}><NavItem eventKey={2}>Weather Forecast</NavItem></LinkContainer>,
+                      <LinkContainer to='/logs' key={3}><NavItem eventKey={3}>Watering Logs</NavItem></LinkContainer>,
+                      <NavItem eventKey={4} key={4} onClick={this.logoutHandler}>Log Out</NavItem>
                   ])
-                  : (<NavItem eventKey={5} href='/login'>Log in</NavItem>)
+                  : (<LinkContainer to='/login'><NavItem eventKey={5} key={5}>Log in</NavItem></LinkContainer>)
                 }
               </Nav>
             </Navbar.Collapse>

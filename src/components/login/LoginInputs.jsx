@@ -59,9 +59,9 @@ export default class LoginInputs extends Component {
             </Panel>)
           : null
         }
-        <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
-          <div className='mdl-card__title mdl-card--expand'>
-            <h2 className='mdl-card__title-text'>Log in to Mizuyari</h2>
+        <div>
+          <div>
+            <h2>Log in to Mizuyari</h2>
           </div>
           <form onSubmit={this.loginHandle}>
             <FormGroup controlId='loginForm'>
