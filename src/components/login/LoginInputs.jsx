@@ -86,13 +86,13 @@ export default class LoginInputs extends Component {
               <Button 
                 bsStyle='primary'
                 type='submit'
-                disable={this.state.isLoggingIn}
+                disabled={this.state.isLoggingIn}
                 onClick={this.loginHandle}
               >
                 {this.state.isLoggingIn ? 'Loging in...': 'Log in'}
               </Button>
               <Button
-                disable={this.state.isResettingPassword}
+                disabled={this.state.isResettingPassword}
                 onClick={this.forgotPassword}
               >
                 {this.state.isResettingPassword? 'Resetting password': 'Reset password'}

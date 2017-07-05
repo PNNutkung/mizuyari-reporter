@@ -79,7 +79,7 @@ export default class RegisterPage extends Component {
                 <Button
                   bsStyle='primary'
                   type='submit'
-                  disable={this.state.isRegistering}
+                  disabled={this.state.isRegistering}
                   onClick={this.onSignUpSubmit}
                 >
                   {this.state.isRegistering ? 'Registering...': 'Register'}
