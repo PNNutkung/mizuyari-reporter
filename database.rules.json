@@ -1,6 +1,13 @@
 {
   "rules": {
     ".read": "auth != null",
-    ".write": "auth != null"
+    ".write": "auth != null",
+    "mizuyari-91fa6":{
+      "checkins": {
+	      "$genid": {
+	        ".indexOn": "date"
+	      }
+    	}
+    }
   }
 }
