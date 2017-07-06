@@ -5,6 +5,7 @@ export default class CheckInPage extends Component {
     return (
       <div className='check-in-page'>
         Hello CheckInPage
+        <p>{this.props.userInfo.firstname}</p>
       </div>
     )
   }

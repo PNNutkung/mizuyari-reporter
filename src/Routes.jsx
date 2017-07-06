@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Redirect, Switch, Link } from 'react-router-dom'
-import { firebaseAuth } from './config/firebase'
+import { dbRef, firebaseAuth } from './config/firebase'
 import DescriptionPage from './components/description/DescriptionPage'
 import MenuPage from './components/menu/MenuPage'
 import LoginPage from './components/login/LoginPage'
@@ -13,12 +13,12 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 const mizuHistory = createBrowserHistory()
 
-const PrivateRoute = ({component: Component, authed, ...rest}) => {
+const PrivateRoute = ({component: Component, authed, userInfo, ...rest}) => {
   return (
     <Route
       {...rest}
       render={props => (authed === true
-        ? (<Component authed={authed} {...props} />)
+        ? (<Component authed={authed} userInfo={userInfo} {...props} />)
         : (<Redirect to={{pathname: '/login', state: {from: props.location}}} />)
       )} />
   )
@@ -40,13 +40,22 @@ export default class Routes extends Component {
     super(props)
     this.state = {
       authed: false,
-      loading: true
+      loading: true,
+      userInfo: ''
     }
+  }
+
+  getUserInfo () {
+    dbRef.child(`users/${firebaseAuth().currentUser.uid}`)
+    .on('value', snapshot => {
+      this.setState({userInfo: snapshot.val().info})
+    })
   }
 
   componentDidMount () {
     this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
+        this.getUserInfo()
         this.setState({
           authed: true,
           loading: false,
@@ -103,8 +112,8 @@ export default class Routes extends Component {
                   <Route path='/' exact render={props => <DescriptionPage authed={this.state.authed} {...props} />} />
                   <PublicRoute authed={this.state.authed} path='/login' component={LoginPage} />
                   <PublicRoute authed={this.state.authed} path='/signup' component={RegisterPage} />
-                  <PrivateRoute authed={this.state.authed} path='/menu' component={MenuPage} />
-                  <PrivateRoute authed={this.state.authed} path='/checkin' component={CheckInPage} />
+                  <PrivateRoute authed={this.state.authed} userInfo={this.state.userInfo} path='/menu' component={MenuPage} />
+                  <PrivateRoute authed={this.state.authed} userInfo={this.state.userInfo} path='/checkin' component={CheckInPage} />
                   <Route render={() => <h3>No Match</h3>} />
               </Switch>
           </Grid>
