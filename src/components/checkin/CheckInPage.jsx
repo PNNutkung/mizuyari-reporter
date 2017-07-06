@@ -6,7 +6,8 @@ export default class CheckInPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      lastDate: null
+      lastDate: null,
+      who: ''
     }
     this.checkInHandler = this.checkInHandler.bind(this)
     this.getTodayCheckins = this.getTodayCheckins.bind(this)
@@ -21,8 +22,14 @@ export default class CheckInPage extends Component {
     .orderByChild('date')
     .limitToLast(1)
     .on('value', snapshot => {
-      this.setState({
-        lastDate: Object.values(snapshot.val())[0].date
+      snapshot.val()
+      ? this.setState({
+        lastDate: Object.values(snapshot.val())[0].date,
+        who: Object.values(snapshot.val())[0].name
+      })
+      : this.setState({
+        lastDate: new Date(1910, 9, 11),
+        who: ''
       })
     })
   }
@@ -44,7 +51,15 @@ export default class CheckInPage extends Component {
     )
     return (
       <div className='check-in-page'>
-        <p>Hello {this.props.userInfo.lastname} {this.props.userInfo.firstname} sama.</p>
+        <h1>Hello {this.props.userInfo.lastname} {this.props.userInfo.firstname} sama.</h1>
+        {
+          (!this.props.userInfo || alreadyWaterThePlant)
+          ? ( this.state.who === `${this.props.userInfo.lastname} ${this.props.userInfo.firstname}`
+              ? <h3>You have watered the plant today!</h3>
+              : <h3>Today, there is somebody watered the plant!</h3>
+            )
+          : null
+        }
         <Button
           bsStyle='primary'
           disabled={!this.props.userInfo || alreadyWaterThePlant }

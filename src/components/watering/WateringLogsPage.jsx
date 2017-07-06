@@ -11,7 +11,7 @@ export default class WateringLogsPage extends Component {
     this.getWateringLogs = this.getWateringLogs.bind(this)
   }
 
-  componentDidMount () {
+  componentWillMount () {
     this.getWateringLogs()
   }
 
@@ -20,7 +20,11 @@ export default class WateringLogsPage extends Component {
     .orderByChild('date')
     .limitToLast(10)
     .on('value', snapshot => {
-      this.setState({
+      snapshot.val() == null
+      ? this.setState({
+        logs: { default: { date: 'No record.', name: 'No record.'} }
+      })
+      : this.setState({
         logs: snapshot.val()
       })
     })
@@ -31,7 +35,11 @@ export default class WateringLogsPage extends Component {
     Object.entries(this.state.logs).forEach(([key, value]) => {
         showingLogs.push(
           <tr key={value.date}>
-            <td>{(new Date(value.date)).toDateString()}</td>
+            <td>{
+              typeof(value.date) !== 'number'
+              ? value.date
+              : (new Date(value.date)).toDateString()
+            }</td>
             <td>{value.name}</td>
           </tr>
         )
