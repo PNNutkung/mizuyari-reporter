@@ -88,12 +88,14 @@ export default class LoginInputs extends Component {
                 type='submit'
                 disabled={this.state.isLoggingIn}
                 onClick={this.loginHandle}
+                block
               >
                 {this.state.isLoggingIn ? 'Loging in...': 'Log in'}
               </Button>
               <Button
                 disabled={this.state.isResettingPassword}
                 onClick={this.forgotPassword}
+                block
               >
                 {this.state.isResettingPassword? 'Resetting password': 'Reset password'}
               </Button>

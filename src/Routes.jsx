@@ -43,6 +43,7 @@ export default class Routes extends Component {
       loading: true,
       userInfo: ''
     }
+    this.getUserInfo = this.getUserInfo.bind(this)
   }
 
   getUserInfo () {
