@@ -9,11 +9,10 @@ export default class CheckInPage extends Component {
   }
 
   checkInHandler () {
-    let currentDate = (new Date()).getTime()
     dbRef.child('checkins')
     .push({
       name: `${this.props.userInfo.lastname} ${this.props.userInfo.firstname}`,
-      date: currentDate
+      date: Date.now()
     })
   }
 

@@ -7,6 +7,7 @@ import LoginPage from './components/login/LoginPage'
 import RegisterPage from './components/register/RegisterPage'
 import createBrowserHistory from 'history/createBrowserHistory'
 import CheckInPage from './components/checkin/CheckInPage'
+import WateringLogsPage from './components/watering/WateringLogsPage'
 import { logout } from './helpers/auth'
 import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
@@ -115,6 +116,7 @@ export default class Routes extends Component {
                   <PublicRoute authed={this.state.authed} path='/signup' component={RegisterPage} />
                   <PrivateRoute authed={this.state.authed} userInfo={this.state.userInfo} path='/menu' component={MenuPage} />
                   <PrivateRoute authed={this.state.authed} userInfo={this.state.userInfo} path='/checkin' component={CheckInPage} />
+                  <PrivateRoute authed={this.state.authed} userInfo={this.state.userInfo} path='/logs' component={WateringLogsPage} />
                   <Route render={() => <h3>No Match</h3>} />
               </Switch>
           </Grid>
