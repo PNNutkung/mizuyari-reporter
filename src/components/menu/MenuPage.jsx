@@ -39,14 +39,14 @@ class MenuPage extends Component {
           <WeatherForecastComponent />
         </Link>
         <Link to='/checkin'>
-          <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.checkinHandler}>
+          <div className='card' onClick={this.checkinHandler}>
             <div className="mdl-card__title" style={menuCardCheckinStyle}>
               <h2 className="mdl-card__title-text">Check-in</h2>
             </div>
           </div>
         </Link>
         <Link to='/logs'>
-          <div className='mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone' onClick={this.logHandler}>
+          <div className='card' onClick={this.logHandler}>
             <div className="mdl-card__title" style={wateringLogsCardImageStyle}>
               <h2 className="mdl-card__title-text">Watering Logs</h2>
             </div>

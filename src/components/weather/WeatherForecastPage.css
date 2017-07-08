@@ -13,6 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ .card {
+  padding: 16px;
+  position: relative;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 2px;
+  margin: 16px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
+
 .weather-forecast .location {
   font-size: 1.75em; }
 
@@ -41,23 +50,14 @@
     -webkit-flex-grow: 1;
         -ms-flex-positive: 1;
             flex-grow: 1; }
-  .weather-forecast .current .sunset:before {
-    content: "Sunset: ";
+  .weather-forecast .current .feelslike:before {
+    content: "Feels like: ";
     color: #888; }
   .weather-forecast .current .wind:before {
     content: "Wind: ";
     color: #888; }
-  .weather-forecast .current .sunrise:before {
-    content: "Sunrise: ";
-    color: #888; }
   .weather-forecast .current .humidity:before {
     content: "Humidity: ";
-    color: #888; }
-  .weather-forecast .current .pollen:before {
-    content: "Pollen Count: ";
-    color: #888; }
-  .weather-forecast .current .pcount:before {
-    content: "Pollen ";
     color: #888; }
 
 .weather-forecast .future {
