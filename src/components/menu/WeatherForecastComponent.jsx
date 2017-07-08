@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
 import apixu from '../../config/weather.json'
 import axios from 'axios'
-import './WeatherForecastPage.css'
 
 export default class WeatherForecastPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      currentWeather: null,
-      forecastWeather: null
+      currentWeather: null
     }
   }
 
   componentWillMount () {
-    axios.get(apixu.FORECAST_URL, {
+    axios.get(apixu.CURRENT_URL, {
       params: {
         key: apixu.API_KEY,
         q: apixu.LOCATION
@@ -21,12 +19,11 @@ export default class WeatherForecastPage extends Component {
     })
       .then((res) => {
         this.setState({
-          currentWeather: res.data.current,
-          forecastWeather: res.data.forecast
+          currentWeather: res.data.current
         })
       })
       .catch((err) => {
-        //do not
+        //do nothing
         console.log(err)
       })
   }

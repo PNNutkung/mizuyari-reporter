@@ -1,3 +1,6 @@
 {
-  "apikey": "c3c958c30eb31de64fbf69864a07bcc4"
+  "CURRENT_URL": "https://api.apixu.com/v1/current.json",
+  "FORECAST_URL": "https://api.apixu.com/v1/forecast.json",
+  "API_KEY": "7abea3f506184379b2704927170807",
+  "LOCATION": "Oita"
 }
