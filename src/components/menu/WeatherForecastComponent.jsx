@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import apixu from '../../config/weather.json'
 import axios from 'axios'
+import { ProgressBar } from 'react-bootstrap'
 
 export default class WeatherForecastPage extends Component {
   constructor (props) {
@@ -37,7 +38,7 @@ export default class WeatherForecastPage extends Component {
           this.state.currentWeather == null
           ? (
             <div className='card'>
-              <h1>Loading...</h1>
+              <ProgressBar active now={100} />
             </div>
           )
           : 

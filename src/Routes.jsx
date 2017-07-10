@@ -9,6 +9,9 @@ import createBrowserHistory from 'history/createBrowserHistory'
 import CheckInPage from './components/checkin/CheckInPage'
 import WateringLogsPage from './components/watering/WateringLogsPage'
 import WeatherForecastPage from './components/weather/WeatherForecastPage'
+import ChatPage from './components/chat/ChatPage'
+import NotFoundPage from './components/notfound/NotFoundPage'
+import LoadingPage from './components/loading/LoadingPage'
 import { logout } from './helpers/auth'
 import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
@@ -82,7 +85,7 @@ export default class Routes extends Component {
   }
 
   render() {
-    return this.state.loading === true ? <h1>Loading</h1> : (
+    return this.state.loading === true ? <LoadingPage /> : (
       <Router history={mizuHistory}>
         <div>
           <Navbar collapseOnSelect>
@@ -97,14 +100,15 @@ export default class Routes extends Component {
                 {
                   this.state.authed
                   ? ([
-                      <LinkContainer to='/checkin' key={1}><NavItem eventKey={1}>Check in</NavItem></LinkContainer>,
                       <LinkContainer to='/weather' key={2}><NavItem eventKey={2}>Weather Forecast</NavItem></LinkContainer>,
-                      <LinkContainer to='/logs' key={3}><NavItem eventKey={3}>Watering Logs</NavItem></LinkContainer>,
-                      <NavItem eventKey={4} key={4} onClick={this.logoutHandler}>Log Out</NavItem>
+                      <LinkContainer to='/checkin' key={1}><NavItem eventKey={1}>Check in</NavItem></LinkContainer>,
+                      <LinkContainer to='/chat' key={3}><NavItem eventKey={3}>Watering Logs</NavItem></LinkContainer>,
+                      <LinkContainer to='/logs' key={3}><NavItem eventKey={4}>Chat</NavItem></LinkContainer>,
+                      <NavItem eventKey={5} key={5} onClick={this.logoutHandler}>Log Out</NavItem>
                     ])
                   : ([
-                      <LinkContainer to='/login' key={5}><NavItem eventKey={5}>Log in</NavItem></LinkContainer>,
-                      <LinkContainer to='/signup'key={6}><NavItem eventKey={6}>Sign up</NavItem></LinkContainer>
+                      <LinkContainer to='/login' key={6}><NavItem eventKey={6}>Log in</NavItem></LinkContainer>,
+                      <LinkContainer to='/signup'key={7}><NavItem eventKey={7}>Sign up</NavItem></LinkContainer>
                     ])
                 }
               </Nav>
@@ -119,7 +123,8 @@ export default class Routes extends Component {
                   <PrivateRoute authed={this.state.authed} userInfo={this.state.userInfo} path='/checkin' component={CheckInPage} />
                   <PrivateRoute authed={this.state.authed} userInfo={this.state.userInfo} path='/logs' component={WateringLogsPage} />
                   <PrivateRoute authed={this.state.authed} userInfo={this.state.userInfo} path='/weather' component={WeatherForecastPage} />
-                  <Route render={() => <h3>No Match</h3>} />
+                  <PrivateRoute authed={this.state.authed} userInfo={this.state.userInfo} path='/chat' component={ChatPage} />
+                  <Route render={() => <NotFoundPage />} />
               </Switch>
           </Grid>
         </div>
