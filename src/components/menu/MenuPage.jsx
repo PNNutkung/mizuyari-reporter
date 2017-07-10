@@ -23,6 +23,10 @@ class MenuPage extends Component {
   }
 
   render() {
+    let style = {
+      color: 'inherit',
+      textDecoration: 'none'
+    }
     let menuCardCheckinStyle = {
       background: `url(${this.state.checkinCardImage}) center / cover`,
       height: '200px',
@@ -35,7 +39,7 @@ class MenuPage extends Component {
     }
     return (
       <div className='mdl-cell mdl-cell--8-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone'>
-        <Link to='/weather'>
+        <Link to='/weather' style={style}>
           <WeatherForecastComponent />
         </Link>
         <Link to='/checkin'>

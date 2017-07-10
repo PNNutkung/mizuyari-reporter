@@ -61,7 +61,7 @@ export default class WeatherForecastPage extends Component {
           this.state.currentWeather == null
           ? (
             <div>
-              <h1>Please connect to the Internet.</h1>
+              <h1>Loading...</h1>
             </div>
           )
           : 
