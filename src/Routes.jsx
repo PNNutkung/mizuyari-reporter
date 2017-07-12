@@ -103,7 +103,7 @@ export default class Routes extends Component {
                       <LinkContainer to='/weather' key={2}><NavItem eventKey={2}>Weather Forecast</NavItem></LinkContainer>,
                       <LinkContainer to='/checkin' key={1}><NavItem eventKey={1}>Check in</NavItem></LinkContainer>,
                       <LinkContainer to='/chat' key={3}><NavItem eventKey={3}>Watering Logs</NavItem></LinkContainer>,
-                      <LinkContainer to='/logs' key={3}><NavItem eventKey={4}>Chat</NavItem></LinkContainer>,
+                      <LinkContainer to='/logs' key={4}><NavItem eventKey={4}>Chat</NavItem></LinkContainer>,
                       <NavItem eventKey={5} key={5} onClick={this.logoutHandler}>Log Out</NavItem>
                     ])
                   : ([
