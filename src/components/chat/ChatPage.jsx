@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { Row, Button, FormControl, Col } from 'react-bootstrap'
+import { Row, Button, FormControl, Col, Glyphicon, ListGroupItem, ListGroup } from 'react-bootstrap'
+import './ChatPage.css'
+import generator from 'generate-password'
 
 export default class ChatPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
+      chatList: [],
       sendText: ''
     }
   }
@@ -15,29 +18,55 @@ export default class ChatPage extends Component {
     })
   }
 
+  sendText = (event) => {
+    let newChatList = this.state.chatList.slice()
+    newChatList.push(
+        <ListGroupItem key={generator.generate({
+          length: 32,
+          numbers: true,
+          symbols: true,
+          excludeSimilarCharacters: true
+        })}>
+          {this.props.userInfo.lastname} {this.props.userInfo.firstname}<br/>
+          {this.state.sendText}
+        </ListGroupItem>
+      )
+    this.setState({
+      chatList: newChatList,
+      sendText: ''
+    })
+  }
+
   render () {
     return (
       <div id="chat-page">
-        Hello Chat Page
-       <Row>
-         <Col sm={10} md={10} lg={10}>
-          <FormControl
-            name='sendText'
-            type='text'
-            value={this.state.sendText}
-            placeholder='Type a message...'
-            onChange={this.handleChange}
-          />
-         </Col>
-         <Col sm={2} md={2} lg={2}>
-          <Button
-            bsStyle='primary'
-            onClick={this.onClick}
-          >
-            <i className='material-icons'>send</i>
-          </Button>
-         </Col>
-       </Row>
+        <div className="scroll">
+          <ListGroup>
+            {this.state.chatList}
+          </ListGroup>
+        </div>
+        <form>
+          <Row>
+            <Col xs={8} sm={10} md={10} lg={10}>
+              <FormControl
+                name='sendText'
+                type='text'
+                value={this.state.sendText}
+                placeholder='Type a message...'
+                onChange={this.handleChange}
+              />
+            </Col>
+            <Col xs={4} sm={2} md={2} lg={2}>
+              <Button
+                bsStyle='primary'
+                onClick={this.sendText}
+                block
+              >
+                <Glyphicon glyph='send' />
+              </Button>
+            </Col>
+          </Row>
+        </form>
       </div>
     )
   }
