@@ -4,3 +4,13 @@ div.scroll {
   overflow: scroll;
   word-wrap: break-word;
 }
+
+.chat-box-name {
+  font-weight: bold;
+}
+
+.chat-box-time {
+  font-weight: lighter;
+  font-style: italic;
+  color: #9E9E9E;
+}

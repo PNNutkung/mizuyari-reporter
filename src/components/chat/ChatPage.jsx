@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import { Row, Button, FormControl, Col, Glyphicon, ListGroupItem, ListGroup } from 'react-bootstrap'
 import './ChatPage.css'
 import generator from 'generate-password'
+import { dbRef } from '../../config/firebase'
 
 export default class ChatPage extends Component {
   constructor (props) {
     super(props)
     this.state = {
       chatList: [],
-      sendText: ''
+      message: ''
     }
   }
 
@@ -20,27 +21,52 @@ export default class ChatPage extends Component {
 
   sendText = (event) => {
     event.preventDefault()
-    let newChatList = this.state.chatList.slice()
-    newChatList.push(
-        <ListGroupItem key={generator.generate({
-          length: 32,
-          numbers: true,
-          symbols: true,
-          excludeSimilarCharacters: true
-        })}>
-          {this.props.userInfo.lastname} {this.props.userInfo.firstname}<br/>
-          {this.state.sendText}
-        </ListGroupItem>
-      )
+    dbRef.child('chats')
+    .push({
+      name: `${this.props.userInfo.lastname} ${this.props.userInfo.firstname}`,
+      date: Date.now(),
+      message: this.state.message
+    })
     this.setState({
-      chatList: newChatList,
-      sendText: ''
+      message: ''
+    })
+  }
+
+  fetchChatData = () => {
+    dbRef.child('chats')
+    .orderByChild('date')
+    .limitToLast(10)
+    .on('value', snapshot => {
+        if(snapshot.val()) {
+          let newChatList = []
+          Object.entries(snapshot.val()).forEach(([key, value]) => {
+            newChatList.push(
+              <ListGroupItem key={generator.generate({
+                length: 32,
+                numbers: true,
+                symbols: true,
+                excludeSimilarCharacters: true
+              })}>
+                <span className='chat-box-name'>{value.name}:</span><br/>
+                <span className='chat-box-time'>{(new Date(value.date)).toLocaleTimeString()} {(new Date(value.date)).toLocaleDateString()}</span><br/>
+                {value.message}
+              </ListGroupItem>
+            )
+        })
+        this.setState({
+          chatList: newChatList
+        })
+       }
     })
   }
 
   updateScroll = () => {
     let element = document.getElementById('chatList')
     element.scrollTop = element.scrollHeight
+  }
+
+  componentWillMount () {
+    this.fetchChatData()
   }
 
   componentDidUpdate () {
@@ -59,9 +85,9 @@ export default class ChatPage extends Component {
           <Row>
             <Col xs={8} sm={10} md={10} lg={10}>
               <FormControl
-                name='sendText'
+                name='message'
                 type='text'
-                value={this.state.sendText}
+                value={this.state.message}
                 placeholder='Type a message...'
                 onChange={this.handleChange}
               />
