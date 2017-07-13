@@ -19,6 +19,7 @@ export default class ChatPage extends Component {
   }
 
   sendText = (event) => {
+    event.preventDefault()
     let newChatList = this.state.chatList.slice()
     newChatList.push(
         <ListGroupItem key={generator.generate({
@@ -37,15 +38,24 @@ export default class ChatPage extends Component {
     })
   }
 
+  updateScroll = () => {
+    let element = document.getElementById('chatList')
+    element.scrollTop = element.scrollHeight
+  }
+
+  componentDidUpdate () {
+    this.updateScroll()
+  }
+
   render () {
     return (
       <div id="chat-page">
-        <div className="scroll">
+        <div className="scroll" id='chatList'>
           <ListGroup>
             {this.state.chatList}
           </ListGroup>
         </div>
-        <form>
+        <form onSubmit={this.sendText}>
           <Row>
             <Col xs={8} sm={10} md={10} lg={10}>
               <FormControl
