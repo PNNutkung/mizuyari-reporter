@@ -9,10 +9,12 @@ class MenuPage extends Component {
     super(props)
     this.state = {
       checkinCardImage: '',
-      wateringLogsCardImage: ''
+      wateringLogsCardImage: '',
+      chatCardImage: ''
     }
     this.getImage('checkinCardImage')
     this.getImage('wateringLogsCardImage')
+    this.getImage('chatCardImage')
   }
 
   getImage = (image) => {
@@ -44,22 +46,35 @@ class MenuPage extends Component {
       color: '#fff',
       textDecoration: 'none'
     }
+    let chatCardImageStyle = {
+      background: `url(${this.state.chatCardImage}) center / cover`,
+      height: '200px',
+      color: '#fff',
+      textDecoration: 'none'
+    }
     return (
       <div id='menu-page'>
         <Link to='/weather' style={style}>
           <WeatherForecastComponent />
         </Link>
         <Link to='/checkin' style={cardLink}>
-          <div className='card-menu-page' onClick={this.checkinHandler}>
+          <div className='card-menu-page'>
             <div className='card-detail' style={menuCardCheckinStyle}>
               <h2 className='card-title'>Check-in</h2>
             </div>
           </div>
         </Link>
         <Link to='/logs' style={cardLink}>
-          <div className='card-menu-page' onClick={this.logHandler}>
+          <div className='card-menu-page'>
             <div className='card-detail' style={wateringLogsCardImageStyle}>
               <h2 className='card-title'>Watering Logs</h2>
+            </div>
+          </div>
+        </Link>
+        <Link to='/chat' style={cardLink}>
+          <div className='card-menu-page'>
+            <div className='card-detail' style={chatCardImageStyle}>
+              <h2 className='card-title'>Chat</h2>
             </div>
           </div>
         </Link>
