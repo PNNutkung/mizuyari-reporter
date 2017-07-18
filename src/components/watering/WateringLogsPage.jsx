@@ -22,7 +22,7 @@ export default class WateringLogsPage extends Component {
     .on('value', snapshot => {
       snapshot.val() == null
       ? this.setState({
-        logs: { default: { date: 'No record.', name: 'No record.'} }
+        logs: { default: { date: 'No record.', name: 'No record.', period: 'No record'} }
       })
       : this.setState({
         logs: snapshot.val()
@@ -40,6 +40,9 @@ export default class WateringLogsPage extends Component {
               ? value.date
               : (new Date(value.date)).toDateString()
             }</td>
+            <td>
+              {value.period}
+            </td>
             <td>{value.name}</td>
           </tr>
         )
@@ -50,6 +53,7 @@ export default class WateringLogsPage extends Component {
           <thead>
             <tr>
               <th>Date</th>
+              <th>Period</th>
               <th>Name</th>
             </tr>
           </thead>

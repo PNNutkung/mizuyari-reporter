@@ -7,7 +7,8 @@ export default class CheckInPage extends Component {
     super(props)
     this.state = {
       lastDate: null,
-      who: ''
+      who: '',
+      period: ''
     }
     this.checkInHandler = this.checkInHandler.bind(this)
     this.getTodayCheckins = this.getTodayCheckins.bind(this)
@@ -25,11 +26,13 @@ export default class CheckInPage extends Component {
       snapshot.val()
       ? this.setState({
         lastDate: Object.values(snapshot.val())[0].date,
-        who: Object.values(snapshot.val())[0].name
+        who: Object.values(snapshot.val())[0].name,
+        period: Object.values(snapshot.val())[0].period
       })
       : this.setState({
         lastDate: new Date(1910, 9, 11),
-        who: ''
+        who: '',
+        period: ''
       })
     })
   }
@@ -38,7 +41,8 @@ export default class CheckInPage extends Component {
     dbRef.child('checkins')
     .push({
       name: `${this.props.userInfo.lastname} ${this.props.userInfo.firstname}`,
-      date: Date.now()
+      date: Date.now(),
+      period: ((new Date()).getHours() <= 12) ? 'morning' : 'evening'
     })
   }
 
@@ -48,10 +52,11 @@ export default class CheckInPage extends Component {
       lastDate.getFullYear() === (new Date()).getFullYear()
       && lastDate.getMonth() === (new Date()).getMonth()
       && lastDate.getDate() === (new Date()).getDate()
+      && this.state.period === (((new Date()).getHours() < 12) ? 'morning' : 'evening')
     )
     return (
       <div className='check-in-page'>
-        <h1>Hello {this.props.userInfo.lastname} {this.props.userInfo.firstname} sama.</h1>
+        <h2>Welcome, {this.props.userInfo.lastname} {this.props.userInfo.firstname} 様.</h2>
         {
           (!this.props.userInfo || alreadyWaterThePlant)
           ? ( this.state.who === `${this.props.userInfo.lastname} ${this.props.userInfo.firstname}`
@@ -66,7 +71,7 @@ export default class CheckInPage extends Component {
           block
           onClick={this.checkInHandler}
         >
-          {this.props.userInfo? 'Check-in': 'Loading...'}
+          {this.props.userInfo? `Check-in ${(((new Date()).getHours() < 12) ? 'morning' : 'evening')}`: 'Loading...'}
         </Button>
       </div>
     )
