@@ -30,7 +30,7 @@ export default class CheckInPage extends Component {
         period: Object.values(snapshot.val())[0].period
       })
       : this.setState({
-        lastDate: new Date(1910, 9, 11),
+        lastDate: null,
         who: '',
         period: ''
       })
@@ -48,11 +48,12 @@ export default class CheckInPage extends Component {
 
   render () {
     let lastDate = new Date(this.state.lastDate)
+    const current = new Date()
     let alreadyWaterThePlant = (
-      lastDate.getFullYear() === (new Date()).getFullYear()
-      && lastDate.getMonth() === (new Date()).getMonth()
-      && lastDate.getDate() === (new Date()).getDate()
-      && this.state.period === (((new Date()).getHours() < 12) ? 'morning' : 'evening')
+      lastDate.getFullYear() === current.getFullYear()
+      && lastDate.getMonth() === current.getMonth()
+      && lastDate.getDate() === current.getDate()
+      && this.state.period === ((current.getHours() < 12) ? 'morning' : 'evening')
     )
     return (
       <div className='check-in-page'>

@@ -61,7 +61,7 @@ export default class WeatherForecastPage extends Component {
         {
           this.state.currentWeather == null
           ? (
-            <div>
+            <div className='weather-forecast-progress-bar'> 
               <ProgressBar active now={100} />
             </div>
           )
